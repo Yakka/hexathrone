@@ -16,7 +16,7 @@ public class PowerUp : MonoBehaviour {
 
 	private bool destroying = false;
 
-	public int score = 1;
+	public int bonus = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -49,8 +49,9 @@ public class PowerUp : MonoBehaviour {
 					//TEMP Code !!
 					if(Input.GetKeyDown(KeyCode.Space)) {
 						PlayRandomSound(rewardSounds);
-						transform.parent.parent.parent.parent.parent.parent.BroadcastMessage("AddScore", score); // Dirty code is dirty.
-						SendMessageUpwards("IncrementeTrackScore");
+						transform.parent.parent.parent.parent.parent.parent.BroadcastMessage("AddScore", bonus); // Dirty code is dirty.
+						Track tr = transform.parent.GetComponent<Track>();
+						tr.IncrementeTrackScore();
 						destroying = true;
 					GetComponent<ParticleSystem>().Play();
 					}

@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour {
 		}
 
 		foreach(AudioSource ac in AC) {
+			ac.mute = true;
 			ac.Play();
 		}
 
@@ -38,6 +39,19 @@ public class AudioManager : MonoBehaviour {
 			ac.mute = !ac.mute;
 		else
 			Debug.Log("Error: invalid channel index.");
+	}
+
+	public void UnmuteAll() {
+		int i = 0;
+		AudioSource ac = null;
+		do{
+			ac = (AudioSource)transform.GetChild(i).GetComponent<AudioSource>();
+			if(ac != null)
+				ac.mute = false;
+			else
+				Debug.Log("Error: invalid channel index.");
+			i ++;
+		} while(ac != null);
 	}
 
 }
