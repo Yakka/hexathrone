@@ -15,6 +15,8 @@ public class Ball : MonoBehaviour {
 	private bool isSticking = false;
 	private float timerSticking = 0f;
 
+	public float input = 0f;
+
 	// Use this for initialization
 	void Start () {
 		speedVectorLeft = new Vector3(-horizontalSpeed, -verticalSpeed, 0);
@@ -26,6 +28,17 @@ public class Ball : MonoBehaviour {
 			timerSticking += Time.deltaTime;
 			if(timerSticking >= timeStick)
 				isSticking = false;
+		}
+	
+		// ---Manage Inputs---
+		//input = Input.GetAxis("Horizontal");
+		if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+			if (triggerGate)
+				Debug.Log("< Left");
+		}
+		if (Input.GetKeyDown(KeyCode.RightArrow)) {
+			if (triggerGate)
+				Debug.Log("Right >");
 		}
 	}
 	
@@ -40,9 +53,22 @@ public class Ball : MonoBehaviour {
 		}
 	}
 
+	public bool triggerGate = false;
+
 	void OnTriggerEnter2D(Collider2D other) {
 		isGoingToLeft = !isGoingToLeft;
 		timerSticking = 0f;
 		isSticking = true;
+
+		if (other.gameObject.name == "gate") {
+			triggerGate = true;
+		}
+
     }
+
+	void OnTriggerExit2D(Collider2D other) {
+		if (other.gameObject.name == "gate") {
+			triggerGate = false;
+		}
+	}
 }
