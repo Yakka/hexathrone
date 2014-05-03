@@ -221,3 +221,6 @@ pip-log.txt
 *.sln
 project/Temp
 project/Library
+*.csproj
+project/Assets/Scenes/cdenis.unity
+project/Assets/Scenes/cdenis.unity.meta
