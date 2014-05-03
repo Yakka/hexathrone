@@ -22,7 +22,7 @@ public class PowerUp : MonoBehaviour {
 	void Start () {
 		SpriteRenderer sprite = GetComponent<SpriteRenderer>();
 		audioSource = GetComponent<AudioSource>();
-
+		/*
 		switch(powerType) {
 			case PowerType.Left:
 				sprite.sprite = Resources.Load<Sprite>("leftPower");
@@ -31,6 +31,7 @@ public class PowerUp : MonoBehaviour {
 				sprite.sprite = Resources.Load<Sprite>("rightPower");
 			break;
 		}
+		*/
 
 	}
 	
@@ -48,7 +49,7 @@ public class PowerUp : MonoBehaviour {
 					//TEMP Code !!
 					if(Input.GetKeyDown(KeyCode.Space)) {
 						PlayRandomSound(rewardSounds);
-						transform.parent.parent.BroadcastMessage("AddScore", score);
+						transform.parent.parent.BroadcastMessage("AddScore", score); // Dirty code is dirty.
 						destroying = true;
 					GetComponent<ParticleSystem>().Play();
 					}
