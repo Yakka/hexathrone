@@ -64,8 +64,8 @@ public class Ball : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-		speedVectorLeft = new Vector3(-horizontalSpeed, -verticalSpeed, 0);
-		speedVectorRight = new Vector3(horizontalSpeed, -verticalSpeed, 0);
+		//speedVectorLeft = new Vector3(-horizontalSpeed, -verticalSpeed, 0);
+		//speedVectorRight = new Vector3(horizontalSpeed, -verticalSpeed, 0);
 		Vector3 pos = cachedTransform.localPosition;
 		float update = Time.deltaTime;
 		percent = (100f - (origin / width) * 100f);
@@ -78,7 +78,7 @@ public class Ball : MonoBehaviour {
 			cachedTransform.Rotate (new Vector3(0, 0, -debug) * update * percent);
 			speed = speedVectorRight;
 		}
-		speed.x *= percent * Time.deltaTime;
+		speed *= percent * Time.deltaTime;
 		pos += speed * Time.deltaTime;
 		origin += Mathf.Abs(cachedTransform.localPosition.x - pos.x);
 		cachedTransform.localPosition = pos;
