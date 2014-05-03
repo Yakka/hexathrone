@@ -7,13 +7,12 @@ public class Ball : MonoBehaviour {
 	public float verticalSpeed = 100f;
 	public float timeStick = 750f;
 	public float baseAccel = 10f;
-	public float width = 19.2f;
+	public float width = 21.65f;
 
 	private Vector3 speedVectorLeft;
 	private Vector3 speedVectorRight;
 
 	private float origin = 0f;
-	private float accel;
 	private float weight;
 	private float percent;
 	public float debug = 50f;
@@ -40,23 +39,35 @@ public class Ball : MonoBehaviour {
 
 	private Transform _cachedTransform;
 
-
-
+	public float input = 0f;
 
 	// Use this for initialization
 	void Start () {
-		accel = baseAccel;
 		weight = 0.2f; // (width / horizontalSpeed) * 1.3f;
 		Debug.Log (weight);
 		speedVectorLeft = new Vector3(-horizontalSpeed, -verticalSpeed, 0);
 		speedVectorRight = new Vector3(horizontalSpeed, -verticalSpeed, 0);
+
+		
 	}
 
+	private bool triggerGate = false;
 	void Update () {
 		if(isSticking) {
 			timerSticking += Time.deltaTime;
 			if(timerSticking >= timeStick)
 				isSticking = false;
+		}
+	
+		// ---Manage Inputs---
+		//input = Input.GetAxis("Horizontal");
+		if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+			if (triggerGate)
+				Debug.Log("< Left");
+		}
+		if (Input.GetKeyDown(KeyCode.RightArrow)) {
+			if (triggerGate)
+				Debug.Log("Right >");
 		}
 	}
 	
@@ -67,27 +78,56 @@ public class Ball : MonoBehaviour {
 		Vector3 speed;
 		if (isGoingToLeft) {
 			cachedTransform.Rotate (new Vector3(0, 0, debug) * update * percent);
-						speed = speedVectorLeft;
-				} else {
+			speed = speedVectorLeft;
+		} else {
 			cachedTransform.Rotate (new Vector3(0, 0, -debug) * update * percent);
-						speed = speedVectorRight;
-				}
+			speed = speedVectorRight;
+		}
 		speed.x *= percent * Time.deltaTime;
 		pos += speed * Time.deltaTime;
 		origin += Mathf.Abs(cachedTransform.position.x - pos.x);
-
 		cachedTransform.position = pos;
 	}
+
 	public Color color;
 	void OnTriggerEnter2D(Collider2D other) {
-		this.renderer.material.color = color;
-		isGoingToLeft = !isGoingToLeft;
-		//Debug.Log (transform.position);
-		//Debug.Log (accel);
-		Debug.Log (origin);
-		origin = 0f;
-		accel = baseAccel;
-		//timerSticking = 0f;
-		//isSticking = true;
+		switch (other.tag) {
+			case "Wall": {
+				isGoingToLeft = !isGoingToLeft;
+				this.renderer.material.color = color;
+				origin = 0f;
+			} break;
+			case "Gate": {
+				triggerGate = true;
+				this.renderer.material.color = color;
+				origin = 0f;
+			}
+			break;
+		}
     }
+
+    void OnTriggerStay2D(Collider2D other) {
+    	if (other.gameObject.name == "PowerUp") {
+			bool destroy = false;
+			#if UNITY_ANDROID
+				//TEMP Code !!
+				if(Input.GetKey(KeyCode.Space)) {
+					destroy = true;
+				}
+				// Swipe!
+			#else
+				// COPY PASTE HERE FOR WINDOWS BUILD
+			#endif
+
+			if(destroy)
+				Destroy(other.gameObject);
+
+		}
+    }
+
+	void OnTriggerExit2D(Collider2D other) {
+		if (other.gameObject.name == "gate") {
+			triggerGate = false;
+		}
+	}
 }
