@@ -23,7 +23,7 @@ public class AudioManager : MonoBehaviour {
 		}
 
 		foreach(AudioSource ac in AC) {
-			ac.Play();
+			//ac.Play();
 		}
 
 	}

@@ -91,39 +91,24 @@ public class Ball : MonoBehaviour {
 
 	public Color color;
 	void OnTriggerEnter2D(Collider2D other) {
+		bool reset = false;
 		switch (other.tag) {
-			case "Wall": {
+			case "Wall":
 				isGoingToLeft = !isGoingToLeft;
-				this.renderer.material.color = color;
-				origin = 0f;
-			} break;
-			case "Gate": {
+				reset = true;
+			break;
+			case "Gate":
 				triggerGate = true;
-				this.renderer.material.color = color;
-				origin = 0f;
-			}
+				reset = true;
 			break;
 		}
-    }
-
-    void OnTriggerStay2D(Collider2D other) {
-    	if (other.gameObject.name == "PowerUp") {
-			bool destroy = false;
-			#if UNITY_ANDROID
-				//TEMP Code !!
-				if(Input.GetKey(KeyCode.Space)) {
-					destroy = true;
-				}
-				// Swipe!
-			#else
-				// COPY PASTE HERE FOR WINDOWS BUILD
-			#endif
-
-			if(destroy)
-				Destroy(other.gameObject);
-
+		if (reset) {
+			this.renderer.material.color = color;
+			origin = 0f;
 		}
-    }
+	}
+
+	
 
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.name == "gate") {
