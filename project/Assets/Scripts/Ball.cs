@@ -58,9 +58,12 @@ public class Ball : MonoBehaviour {
 	public bool triggerGate = false;
 
 	void OnTriggerEnter2D(Collider2D other) {
-		isGoingToLeft = !isGoingToLeft;
-		timerSticking = 0f;
-		isSticking = true;
+		if(other.name == "Wall") {
+			isGoingToLeft = !isGoingToLeft;
+			timerSticking = 0f;
+			isSticking = true;
+		}
+		
 
 		if (other.gameObject.name == "gate") {
 			triggerGate = true;

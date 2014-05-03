@@ -7,13 +7,11 @@ public class AudioManager : MonoBehaviour {
 
 	public GameObject channelPrefab; // Prefab to instatiate
 
-	bool tmp = true;
-
 	// Use this for initialization
 	void Start () {
 
 		// Instantiate the different channels
-		foreach(AudioClip ac in channels) {
+		for(int i = 0; i < channels.Length; i++) {
 			GameObject channel = (GameObject)Instantiate(channelPrefab);
 			channel.transform.parent = transform;
 			channel.name = "Channel";
