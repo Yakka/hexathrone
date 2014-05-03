@@ -16,6 +16,7 @@ public class PowerUp : MonoBehaviour {
 
 	private bool destroying = false;
 
+	public int score = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -47,7 +48,7 @@ public class PowerUp : MonoBehaviour {
 					//TEMP Code !!
 					if(Input.GetKeyDown(KeyCode.Space)) {
 						PlayRandomSound(rewardSounds);
-						transform.parent.parent.BroadcastMessage("AddScore", 1);
+						transform.parent.parent.BroadcastMessage("AddScore", score);
 						destroying = true;
 					GetComponent<ParticleSystem>().Play();
 					}
