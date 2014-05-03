@@ -20,9 +20,14 @@ public class Ball : MonoBehaviour {
 	void Update () {
 		Vector3 pos = transform.position;
 		if(isGoingToLeft)
-			pos += speedVectorRight * Time.deltaTime * speed;
+			pos += speedVectorLeft * Time.deltaTime * speed;
 		else
 			pos += speedVectorRight * Time.deltaTime * speed;
 		transform.position = pos;
 	}
+
+	void OnTriggerEnter2D(Collider2D other) {
+		isGoingToLeft = !isGoingToLeft;
+    	Debug.Log("pouet");
+    }
 }
