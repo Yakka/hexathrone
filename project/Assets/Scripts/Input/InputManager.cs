@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour
 	public bool m_isRight;
 
 	public float m_swipeThreshold;
-
+	
 	void Awake()
 	{
 		if ( m_instance == null )
@@ -29,6 +29,7 @@ public class InputManager : MonoBehaviour
 	void OnDrag( Vector2 delta )
 	{
 		float drag = delta.x;
+	
 		if ( Mathf.Abs( drag ) > m_swipeThreshold )
 		{
 			if   ( drag > 0 ) m_isRight = true;

@@ -4,6 +4,7 @@ using System.Collections;
 public class AudioManager : MonoBehaviour {
 
 	public AudioClip[] channels;
+	public bool muteAtStart = true;
 
 	public GameObject channelPrefab; // Prefab to instatiate
 
@@ -23,7 +24,7 @@ public class AudioManager : MonoBehaviour {
 		}
 
 		foreach(AudioSource ac in AC) {
-			ac.mute = true;
+			ac.mute = muteAtStart;
 			ac.Play();
 		}
 
