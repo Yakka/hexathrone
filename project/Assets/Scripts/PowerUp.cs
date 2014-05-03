@@ -48,6 +48,7 @@ public class PowerUp : MonoBehaviour {
 					if(Input.GetKeyDown(KeyCode.Space)) {
 						PlayRandomSound(rewardSounds);
 						destroying = true;
+					GetComponent<ParticleSystem>().Play();
 					}
 					// Swipe!
 				#else
