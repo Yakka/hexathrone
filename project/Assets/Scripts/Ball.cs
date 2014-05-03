@@ -74,9 +74,10 @@ public class Ball : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-		Vector3 pos = cachedTransform.position;
+		Vector3 pos = cachedTransform.localPosition;
 		float update = Time.deltaTime;
 		percent = (100f - (origin / width) * 100f);
+		
 		Vector3 speed;
 		if (isGoingToLeft) {
 			cachedTransform.Rotate (new Vector3(0, 0, debug) * update * percent);
@@ -87,8 +88,8 @@ public class Ball : MonoBehaviour {
 		}
 		speed.x *= percent * Time.deltaTime;
 		pos += speed * Time.deltaTime;
-		origin += Mathf.Abs(cachedTransform.position.x - pos.x);
-		cachedTransform.position = pos;
+		origin += Mathf.Abs(cachedTransform.localPosition.x - pos.x);
+		cachedTransform.localPosition = pos;
 	}
 
 	public Color color;
