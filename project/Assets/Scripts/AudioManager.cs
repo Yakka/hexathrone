@@ -7,6 +7,8 @@ public class AudioManager : MonoBehaviour {
 
 	public GameObject channelPrefab; // Prefab to instatiate
 
+	bool tmp = true;
+
 	// Use this for initialization
 	void Start () {
 
@@ -26,12 +28,18 @@ public class AudioManager : MonoBehaviour {
 			ac.Play();
 		}
 
-		//AC[0].mute = true;
+	}
 
+	public void Update() {
+		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void SwitchChannel(int chanID) {
+		AudioSource ac = (AudioSource)transform.GetChild(chanID).GetComponent<AudioSource>();
+		if(ac != null)
+			ac.mute = !ac.mute;
+		else
+			Debug.Log("Error: invalid channel index.");
 	}
+
 }
