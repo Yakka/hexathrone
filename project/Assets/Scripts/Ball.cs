@@ -69,6 +69,27 @@ public class Ball : MonoBehaviour {
 			triggerGate = true;
 		}
 
+		
+
+    }
+
+    void OnTriggerStay2D(Collider2D other) {
+    	if (other.gameObject.name == "PowerUp") {
+			bool destroy = false;
+			#if UNITY_ANDROID
+				//TEMP Code !!
+				if(Input.GetKey(KeyCode.Space)) {
+					destroy = true;
+				}
+				// Swipe!
+			#else
+				// COPY PASTE HERE FOR WINDOWS BUILD
+			#endif
+
+			if(destroy)
+				Destroy(other.gameObject);
+
+		}
     }
 
 	void OnTriggerExit2D(Collider2D other) {
