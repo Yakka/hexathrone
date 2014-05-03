@@ -21,6 +21,8 @@ public class Ball : MonoBehaviour {
 	void Start () {
 		speedVectorLeft = new Vector3(-horizontalSpeed, -verticalSpeed, 0);
 		speedVectorRight = new Vector3(horizontalSpeed, -verticalSpeed, 0);
+
+		
 	}
 
 	void Update() {
