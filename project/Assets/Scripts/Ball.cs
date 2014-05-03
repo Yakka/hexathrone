@@ -125,6 +125,5 @@ public class Ball : MonoBehaviour {
 
 	public void AddScore(int bonus) {
 		score += bonus;
-		Debug.Log(score);
 	}
 }

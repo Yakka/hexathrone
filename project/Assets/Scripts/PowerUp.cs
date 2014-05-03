@@ -47,7 +47,7 @@ public class PowerUp : MonoBehaviour {
 					//TEMP Code !!
 					if(Input.GetKeyDown(KeyCode.Space)) {
 						PlayRandomSound(rewardSounds);
-						BroadcastMessage("AddScore", 1);
+						transform.parent.parent.BroadcastMessage("AddScore", 1);
 						destroying = true;
 					GetComponent<ParticleSystem>().Play();
 					}
