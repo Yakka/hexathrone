@@ -6,11 +6,14 @@ public class Track : MonoBehaviour {
 	private int trackScore = 0;
 	public int neededScoreToPlay = 1;
 
+	public Ball target;
+
 	private AudioManager audioTarget;
 
 	// Use this for initialization
 	void Start () {
 		audioTarget = gameObject.GetComponent<AudioManager>();
+		
 	}
 	
 	// Update is called once per frame

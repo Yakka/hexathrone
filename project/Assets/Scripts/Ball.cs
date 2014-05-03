@@ -18,6 +18,8 @@ public class Ball : MonoBehaviour {
 	private float elapsedTime = 0f;
 	public float debug = 50f;
 
+	public int crossedBars = 0;
+
 	private bool isGoingToLeft = true;
 
 	public Transform cachedTransform
@@ -91,10 +93,12 @@ public class Ball : MonoBehaviour {
 			case "Wall":
 				isGoingToLeft = !isGoingToLeft;
 				reset = true;
+				crossedBars ++;
 			break;
 			case "Gate":
 				triggerGate = true;
 				reset = true;
+				crossedBars ++;
 			break;
 		}
 		if (reset) {
