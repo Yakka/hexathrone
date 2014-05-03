@@ -17,8 +17,7 @@ public class Ball : MonoBehaviour {
 		speedVectorRight = new Vector3(horizontalSpeed, -verticalSpeed, 0);
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		Vector3 pos = transform.position;
 		if(isGoingToLeft)
 			pos += speedVectorLeft * Time.deltaTime;
