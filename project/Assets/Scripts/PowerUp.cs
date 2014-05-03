@@ -12,16 +12,17 @@ public class PowerUp : MonoBehaviour {
 	public PowerType powerType = PowerType.Left;
 
 	private AudioSource audioSource;
-	public AudioClip rewardSound;
+	public AudioClip[] rewardSounds;
 
 	private bool destroying = false;
 
+	public int score = 1;
 
 	// Use this for initialization
 	void Start () {
 		SpriteRenderer sprite = GetComponent<SpriteRenderer>();
 		audioSource = GetComponent<AudioSource>();
-
+		/*
 		switch(powerType) {
 			case PowerType.Left:
 				sprite.sprite = Resources.Load<Sprite>("leftPower");
@@ -30,6 +31,7 @@ public class PowerUp : MonoBehaviour {
 				sprite.sprite = Resources.Load<Sprite>("rightPower");
 			break;
 		}
+		*/
 
 	}
 	
@@ -45,9 +47,10 @@ public class PowerUp : MonoBehaviour {
     		if(!destroying) {
 				#if UNITY_ANDROID
 					//TEMP Code !!
-					if(Input.GetKey(KeyCode.Space)) {
-						
-						audioSource.PlayOneShot(rewardSound, 1f);
+					if(Input.GetKeyDown(KeyCode.Space)) {
+						PlayRandomSound(rewardSounds);
+						transform.parent.parent.parent.parent.parent.parent.BroadcastMessage("AddScore", score); // Dirty code is dirty.
+						SendMessageUpwards("IncrementeTrackScore");
 						destroying = true;
 					GetComponent<ParticleSystem>().Play();
 					}
@@ -58,5 +61,9 @@ public class PowerUp : MonoBehaviour {
 			}
 
 		}
+    }
+
+    private void PlayRandomSound(AudioClip[] sounds) {
+    	audioSource.PlayOneShot(sounds[Random.Range(0, sounds.Length)], 1f);
     }
 }
