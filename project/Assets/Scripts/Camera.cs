@@ -3,11 +3,11 @@ using System.Collections;
 
 public class Camera : MonoBehaviour {
 
+
 	public GameObject target;
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -16,4 +16,5 @@ public class Camera : MonoBehaviour {
 		pos.y = target.transform.position.y;
 		transform.position = pos;
 	}
+
 }
