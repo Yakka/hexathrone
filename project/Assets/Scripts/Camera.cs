@@ -4,6 +4,8 @@ using System.Collections;
 public class Camera : MonoBehaviour {
 
 
+	public float yShift = -20f; // Shift between the camera and the ball on the y-axis
+
 	public GameObject target;
 
 	// Use this for initialization
@@ -13,7 +15,7 @@ public class Camera : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Vector3 pos = transform.position;
-		pos.y = target.transform.position.y;
+		pos.y = target.transform.position.y + yShift;
 		transform.position = pos;
 	}
 

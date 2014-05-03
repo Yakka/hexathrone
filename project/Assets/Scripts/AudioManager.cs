@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour {
 	}
 
 	public void Update() {
-		
+
 	}
 
 	public void SwitchChannel(int chanID) {
