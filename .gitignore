@@ -233,3 +233,5 @@ pip-log.txt
 *.sln
 project/Temp
 project/Library
+manu.unity
+manu.unity.meta
