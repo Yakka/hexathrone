@@ -99,8 +99,8 @@ public class Ball : MonoBehaviour {
 		}
 		if (reset) {
 			//this.renderer.material.color = color;
-			//Debug.Log(origin);
-			//Debug.Log(Time.realtimeSinceStartup - elapsedTime);
+			Debug.Log(origin);
+			Debug.Log(Time.realtimeSinceStartup - elapsedTime);
 			elapsedTime = Time.realtimeSinceStartup;
 			origin = 0f;
 		}
