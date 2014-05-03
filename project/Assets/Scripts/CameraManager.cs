@@ -1,22 +1,26 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class CameraManager : MonoBehaviour {
-
-
+public class CameraManager : Base 
+{
 	public float yShift = -20f; // Shift between the camera and the ball on the y-axis
 
 	public GameObject target;
 
-	// Use this for initialization
-	void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		Vector3 pos = transform.position;
-		pos.y = target.transform.position.y + yShift;
-		transform.position = pos;
+	private Transform m_cachedTargetTransform;
+
+	void Start()
+	{
+		//cache target transform
+		m_cachedTargetTransform = target.transform;
 	}
 
+	void Update() 
+	{
+		Vector3 pos = cachedTransform.localPosition;
+
+		//work in local position to maintain pixel units
+		pos.y = m_cachedTargetTransform.localPosition.y + yShift;
+		cachedTransform.localPosition = pos;
+	}
 }
