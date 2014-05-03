@@ -33,7 +33,7 @@ public class Gate : MonoBehaviour
 	}
 
 	void OnTriggerStay2D( Collider2D other ) 
-	{
+	{ 
 		if ( other.tag.Equals( "Ball" ) && m_isTriggerPressed )
 			StartCoroutine( DisableWallColliders( m_colliders ) );
 	}
