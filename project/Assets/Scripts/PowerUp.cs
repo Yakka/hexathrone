@@ -49,6 +49,7 @@ public class PowerUp : MonoBehaviour {
 						
 						audioSource.PlayOneShot(rewardSound, 1f);
 						destroying = true;
+					GetComponent<ParticleSystem>().Play();
 					}
 					// Swipe!
 				#else
