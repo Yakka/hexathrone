@@ -11,9 +11,16 @@ public class PowerUp : MonoBehaviour {
 
 	public PowerType powerType = PowerType.Left;
 
+	private AudioSource audioSource;
+	public AudioClip rewardSound;
+
+	private bool destroying = false;
+
+
 	// Use this for initialization
 	void Start () {
 		SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+		audioSource = GetComponent<AudioSource>();
 
 		switch(powerType) {
 			case PowerType.Left:
@@ -28,6 +35,27 @@ public class PowerUp : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(destroying) {
+			renderer.enabled = false;
+		}
 	}
+
+	void OnTriggerStay2D(Collider2D other) {
+    	if (other.gameObject.name == "Ball") {
+    		if(!destroying) {
+				#if UNITY_ANDROID
+					//TEMP Code !!
+					if(Input.GetKey(KeyCode.Space)) {
+						
+						audioSource.PlayOneShot(rewardSound, 1f);
+						destroying = true;
+					}
+					// Swipe!
+				#else
+					// COPY PASTE HERE FOR WINDOWS BUILD
+				#endif
+			}
+
+		}
+    }
 }
