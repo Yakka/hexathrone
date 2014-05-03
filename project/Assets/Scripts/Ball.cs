@@ -9,6 +9,8 @@ public class Ball : MonoBehaviour {
 	public float baseAccel = 10f;
 	public float width = 21.65f;
 
+	private int score = 0;
+
 	private Vector3 speedVectorLeft;
 	private Vector3 speedVectorRight;
 
@@ -110,9 +112,18 @@ public class Ball : MonoBehaviour {
 
 	
 
-	void OnTriggerExit2D(Collider2D other) {
+	public void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.name == "gate") {
 			triggerGate = false;
 		}
+	}
+
+	public void InitializeScore() {
+		score = 0;
+	}
+
+	public void AddScore(int bonus) {
+		score += bonus;
+		Debug.Log(score);
 	}
 }
