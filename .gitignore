@@ -219,3 +219,5 @@ pip-log.txt
 
 #Unity3D
 *.sln
+hexathrone/Temp
+hexathrone/Library
