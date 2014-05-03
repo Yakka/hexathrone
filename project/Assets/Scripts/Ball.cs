@@ -5,7 +5,6 @@ public class Ball : MonoBehaviour {
 
 	public float horizontalSpeed = 100f;
 	public float verticalSpeed = 100f;
-	public float timeStick = 750f;
 	public float baseAccel = 10f;
 	public float width = 21.65f;
 
@@ -13,14 +12,11 @@ public class Ball : MonoBehaviour {
 	private Vector3 speedVectorRight;
 
 	private float origin = 0f;
-	private float weight;
 	private float percent;
+	private float elapsedTime = 0f;
 	public float debug = 50f;
 
 	private bool isGoingToLeft = true;
-
-	private bool isSticking = false;
-	private float timerSticking = 0f;
 
 	public Transform cachedTransform
 	{
@@ -43,8 +39,7 @@ public class Ball : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		weight = 0.2f; // (width / horizontalSpeed) * 1.3f;
-		Debug.Log (weight);
+		elapsedTime = Time.realtimeSinceStartup;
 		speedVectorLeft = new Vector3(-horizontalSpeed, -verticalSpeed, 0);
 		speedVectorRight = new Vector3(horizontalSpeed, -verticalSpeed, 0);
 
@@ -53,11 +48,6 @@ public class Ball : MonoBehaviour {
 
 	private bool triggerGate = false;
 	void Update () {
-		if(isSticking) {
-			timerSticking += Time.deltaTime;
-			if(timerSticking >= timeStick)
-				isSticking = false;
-		}
 	
 		// ---Manage Inputs---
 		//input = Input.GetAxis("Horizontal");
@@ -72,6 +62,8 @@ public class Ball : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
+		speedVectorLeft = new Vector3(-horizontalSpeed, -verticalSpeed, 0);
+		speedVectorRight = new Vector3(horizontalSpeed, -verticalSpeed, 0);
 		Vector3 pos = cachedTransform.localPosition;
 		float update = Time.deltaTime;
 		percent = (100f - (origin / width) * 100f);
@@ -104,7 +96,10 @@ public class Ball : MonoBehaviour {
 			break;
 		}
 		if (reset) {
-			this.renderer.material.color = color;
+			//this.renderer.material.color = color;
+			//Debug.Log(origin);
+			//Debug.Log(Time.realtimeSinceStartup - elapsedTime);
+			elapsedTime = Time.realtimeSinceStartup;
 			origin = 0f;
 		}
 	}
