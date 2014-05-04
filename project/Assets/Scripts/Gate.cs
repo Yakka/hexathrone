@@ -12,6 +12,9 @@ public class Gate : MonoBehaviour
 
 	public Collider2D[] m_colliders;
 
+	//locks gate passing to one time only D:
+	private bool m_isTriggered;
+
 	private float m_triggerCounter;
 
 	// Use this for initialization
@@ -34,12 +37,23 @@ public class Gate : MonoBehaviour
 
 	void OnTriggerStay2D( Collider2D other ) 
 	{ 
-		if ( other.tag.Equals( "Ball" ) && m_isTriggerPressed )
-			StartCoroutine( DisableWallColliders( m_colliders ) );
+		if ( other.tag.Equals( "Ball" ) )
+		{
+			Ball theBall = other.GetComponent<Ball>(); //try to match the same direction of the ball
+			if ( theBall.isLeft == m_isLeftTrigger && m_isTriggerPressed && !m_isTriggered )
+			{
+				StartCoroutine( DisableWallColliders( m_colliders ) );
+
+				//launch particle
+				ParticleManager.instance.PlayParticle( "Gate", transform.position );
+			}
+		}
 	}
 
 	IEnumerator DisableWallColliders( Collider2D[] colliders )
 	{
+		m_isTriggered = true;
+
 		foreach( Collider2D collider in colliders )
 			collider.enabled = false;
 		
@@ -47,6 +61,8 @@ public class Gate : MonoBehaviour
 		
 		foreach( Collider2D collider in colliders )
 			collider.enabled = true;
+
+		m_isTriggered = false;
 	}
 
 	void Press()

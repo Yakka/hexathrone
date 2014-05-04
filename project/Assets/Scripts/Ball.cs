@@ -22,6 +22,8 @@ public class Ball : MonoBehaviour {
 
 	private bool isGoingToLeft = true;
 
+	public bool isLeft { get { return isGoingToLeft; } }
+
 	public Transform cachedTransform
 	{
 		get
