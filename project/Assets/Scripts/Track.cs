@@ -6,6 +6,8 @@ public class Track : MonoBehaviour {
 	private int trackScore = 0;
 	public int scoreToPlay = 1;
 	public int scoreToStop = 1;
+	public int volumeVelocity = 3;
+	public float maximumVolume = 1f;
 
 	public int id;
 	public Ball target;
@@ -47,8 +49,11 @@ public class Track : MonoBehaviour {
 			div = scoreToPlay;
 
 
-		audioTarget.SetVolumeAll(Mathf.Clamp(((float) trackScore)/ div, minimum, 1f));
+		audioTarget.SetVolumeAll(Mathf.Clamp(((float) trackScore)/ div, minimum, maximumVolume));
 
+// MIXAGE TOOL
+	//	audioTarget.SetVolumeAll(maximumVolume);
+//
 
 		lastCrossedBar = target.crossedBars;
 	}
@@ -58,7 +63,7 @@ public class Track : MonoBehaviour {
 	}
 
 	public void IncrementeTrackScore() {
-		trackScore += 5;
+		trackScore += volumeVelocity;
 		
 	}
 }
