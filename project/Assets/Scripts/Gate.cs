@@ -37,12 +37,16 @@ public class Gate : MonoBehaviour
 
 	void OnTriggerStay2D( Collider2D other ) 
 	{ 
-		if ( other.tag.Equals( "Ball" ) && m_isTriggerPressed && !m_isTriggered )
+		if ( other.tag.Equals( "Ball" ) )
 		{
-			StartCoroutine( DisableWallColliders( m_colliders ) );
+			Ball theBall = other.GetComponent<Ball>(); //try to match the same direction of the ball
+			if ( theBall.isLeft == m_isLeftTrigger && m_isTriggerPressed && !m_isTriggered )
+			{
+				StartCoroutine( DisableWallColliders( m_colliders ) );
 
-			//launch particle
-			ParticleManager.instance.PlayParticle( "Gate", transform.position );
+				//launch particle
+				ParticleManager.instance.PlayParticle( "Gate", transform.position );
+			}
 		}
 	}
 
