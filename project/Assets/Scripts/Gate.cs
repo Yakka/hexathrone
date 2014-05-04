@@ -17,10 +17,18 @@ public class Gate : MonoBehaviour
 
 	private float m_triggerCounter;
 
+	public static AudioSource source;
 
-	// Use this for initialization
-	void Start () {
-	
+	void Awake()
+	{
+		if ( source == null )
+		{
+			GameObject sourceGo = new GameObject();
+			source = sourceGo.AddComponent<AudioSource>();
+
+			source.clip = Resources.Load<AudioClip>( "Sounds/gate" );
+			source.volume = 0.2f;
+		}
 	}
 	
 	// Update is called once per frame
@@ -49,6 +57,10 @@ public class Gate : MonoBehaviour
 				ParticleManager.instance.PlayParticle( "Gate", transform.position );
 
 				theBall.Transition( m_isLeftTrigger ? -1 : 1 );
+
+				//Play sound
+			//	if ( source != null )
+			//		source.Play();
 			}
 		}
 	}
