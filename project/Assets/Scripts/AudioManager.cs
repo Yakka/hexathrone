@@ -15,17 +15,14 @@ public class AudioManager : MonoBehaviour {
 		for(int i = 0; i < channels.Length; i++) {
 			GameObject channel = (GameObject)Instantiate(channelPrefab);
 			channel.transform.parent = transform;
-			channel.name = "Channel";
+			channel.name = "Channel"+name;
 		}
 
 		AudioSource[] AC = gameObject.GetComponentsInChildren<AudioSource>();
 		for(int i = 0; i < channels.Length; i++) {
 			AC[i].clip = channels[i];
-		}
-
-		foreach(AudioSource ac in AC) {
-			ac.mute = muteAtStart;
-			ac.Play();
+			AC[i].mute = muteAtStart;
+			AC[i].Play();
 		}
 
 	}

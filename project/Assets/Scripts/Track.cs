@@ -23,13 +23,13 @@ public class Track : MonoBehaviour {
 		if(target.crossedBars != lastCrossedBar && target.GetCurrentTrack() != id) {
 			trackScore --;
 		}
-
+/*
 		if(trackScore >= neededScoreToPlay) {
 			audioTarget.UnmuteAll();
 		}
 		else {
 			audioTarget.MuteAll();
-		}
+		} */
 		lastCrossedBar = target.crossedBars;
 	}
 
