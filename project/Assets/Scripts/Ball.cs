@@ -145,5 +145,10 @@ public class Ball : MonoBehaviour {
 		pos.x += sign * transition;
 
 		cachedTransform.localPosition = pos;
+
+		elapsedTime = Time.realtimeSinceStartup;
+		origin = -transition;
+
+//		Debug.Break();
 	}
 }
