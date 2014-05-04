@@ -11,12 +11,11 @@ public class Menu : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		//PlayerPrefs.SetInt("Highscore", 0);
-
 		highscoreScript = highscoreGO.GetComponent<UILabel>();
 
-		if (PlayerPrefs.HasKey("Highscore"))
+		if (PlayerPrefs.HasKey("Highscore")) {
 			highscore = PlayerPrefs.GetInt("Highscore");
+		}
 		else
 			highscore = 0;
 		highscoreScript.text = "HIGHSCORE\n" + highscore.ToString();
@@ -32,10 +31,35 @@ public class Menu : MonoBehaviour {
 	}
 
 	public void LoadCredits() {
-		//Application.LoadLevel("Credits");
+		StartCoroutine(fuckit2());
 	}
 
+	public GameObject playUI;
+	public GameObject howtoUI;
+	public GameObject creditsUI;
+
 	public void LoadHowTo() {
-		//Application.LoadLevel("Howto");
+		StartCoroutine(fuckit());
+
+	}
+
+	IEnumerator fuckit() {
+		playUI.SetActive(false);
+		howtoUI.SetActive(true);
+
+		yield return new WaitForSeconds(3);
+
+		howtoUI.SetActive(false);
+		playUI.SetActive(true);
+	}
+
+	IEnumerator fuckit2() {
+		playUI.SetActive(false);
+		creditsUI.SetActive(true);
+
+		yield return new WaitForSeconds(3);
+
+		creditsUI.SetActive(false);
+		playUI.SetActive(true);
 	}
 }
