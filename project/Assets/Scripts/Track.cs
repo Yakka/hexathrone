@@ -61,7 +61,7 @@ public class Track : MonoBehaviour {
 		lastCrossedBar = target.crossedBars;
 
 		if(target.ended) {
-			audioTarget.SetVolumeAll(target.endTimer/finalFade);
+			audioTarget.ReduceVolumeAll(target.endTimer/finalFade);
 		}
 	}
 

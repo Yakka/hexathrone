@@ -59,4 +59,11 @@ public class AudioManager : MonoBehaviour {
 			AC[id].volume = v;
 	}
 
+	public void ReduceVolumeAll(float v) {
+		foreach(AudioSource ac in AC) {
+			if(ac.volume > v)
+				ac.volume = v;
+		}
+	}
+
 }
