@@ -8,6 +8,8 @@ public class AudioManager : MonoBehaviour {
 
 	public GameObject channelPrefab; // Prefab to instatiate
 
+	public AudioSource[] AC;
+
 	// Use this for initialization
 	void Start () {
 
@@ -18,17 +20,31 @@ public class AudioManager : MonoBehaviour {
 			channel.name = "Channel"+name;
 		}
 
-		AudioSource[] AC = gameObject.GetComponentsInChildren<AudioSource>();
-		for(int i = 0; i < channels.Length; i++) {
-			AC[i].clip = channels[i];
-			AC[i].mute = muteAtStart;
-			AC[i].Play();
+		AudioSource[] tmpAC = gameObject.GetComponentsInChildren<AudioSource>();
+		AC = new AudioSource[channels.Length];
+		int chanNB = 0;
+		for(int i = 0; i < tmpAC.Length; i++) {
+			if(chanNB >= channels.Length)
+				break;
+			else if(tmpAC[i].gameObject.name == "Channel"+name) {
+				tmpAC[i].clip = channels[chanNB];
+				tmpAC[i].mute = muteAtStart;
+				tmpAC[i].Play();
+				AC[chanNB] = tmpAC[i];
+				chanNB ++;
+			}
 		}
+
 
 	}
 
-	public void Update() {
-
+	public bool IsPlayingSomething() {
+		foreach(AudioSource ac in AC) {
+			if(ac.isPlaying && ac.mute == false) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void SwitchChannel(int chanID) {
@@ -63,6 +79,24 @@ public class AudioManager : MonoBehaviour {
 				Debug.Log("Error: invalid channel index.");
 			i ++;
 		} while(ac != null);
+	}
+
+	public void MuteChannel(int i) {
+		AudioSource ac = null;
+		ac = (AudioSource)transform.GetChild(i).GetComponent<AudioSource>();
+		if(ac != null)
+			ac.mute = true;
+		else
+			Debug.Log("Error: invalid channel index.");
+	}
+
+	public void UnmuteChannel(int i) {
+		AudioSource ac = null;
+		ac = (AudioSource)transform.GetChild(i).GetComponent<AudioSource>();
+		if(ac != null)
+			ac.mute = false;
+		else
+			Debug.Log("Error: invalid channel index.");
 	}
 
 }

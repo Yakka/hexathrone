@@ -4,7 +4,8 @@ using System.Collections;
 public class Track : MonoBehaviour {
 
 	private int trackScore = 0;
-	public int neededScoreToPlay = 1;
+	public int scoreToPlay = 1;
+	public int scoreToStop = 1;
 
 	public int id;
 	public Ball target;
@@ -20,17 +21,21 @@ public class Track : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// The ball is not on the track and has crossed a bar
-		if(target.crossedBars != lastCrossedBar && target.GetCurrentTrack() != id) {
+		if(target.crossedBars != lastCrossedBar && target.GetCurrentTrack() != id && trackScore > 0) {
 			trackScore --;
 		}
 
-		if(trackScore >= neededScoreToPlay) {
+		if(trackScore >= scoreToPlay) {
 			audioTarget.UnmuteAll();
 		}
-		else {
+		else if(trackScore < scoreToStop) {
 			audioTarget.MuteAll();
 		} 
 		lastCrossedBar = target.crossedBars;
+	}
+
+	public bool IsPlayingSomething() {
+		return audioTarget.IsPlayingSomething();
 	}
 
 	public void IncrementeTrackScore() {
