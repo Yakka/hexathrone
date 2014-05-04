@@ -14,6 +14,7 @@ public class Gate : MonoBehaviour
 
 	private float m_triggerCounter;
 
+
 	// Use this for initialization
 	void Start () {
 	
@@ -34,8 +35,9 @@ public class Gate : MonoBehaviour
 
 	void OnTriggerStay2D( Collider2D other ) 
 	{ 
-		if ( other.tag.Equals( "Ball" ) && m_isTriggerPressed )
+		if ( other.tag.Equals( "Ball" ) && m_isTriggerPressed ) {
 			StartCoroutine( DisableWallColliders( m_colliders ) );
+		}
 	}
 
 	IEnumerator DisableWallColliders( Collider2D[] colliders )
@@ -47,6 +49,8 @@ public class Gate : MonoBehaviour
 		
 		foreach( Collider2D collider in colliders )
 			collider.enabled = true;
+
+		
 	}
 
 	void Press()

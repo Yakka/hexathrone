@@ -55,4 +55,17 @@ public class AudioManager : MonoBehaviour {
 		} while(ac != null);
 	}
 
+	public void MuteAll() {
+		int i = 0;
+		AudioSource ac = null;
+		do{
+			ac = (AudioSource)transform.GetChild(i).GetComponent<AudioSource>();
+			if(ac != null)
+				ac.mute = true;
+			else
+				Debug.Log("Error: invalid channel index.");
+			i ++;
+		} while(ac != null);
+	}
+
 }
