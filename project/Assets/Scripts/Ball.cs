@@ -74,10 +74,10 @@ public class Ball : MonoBehaviour {
 		
 		Vector3 speed;
 		if (isGoingToLeft) {
-			cachedTransform.Rotate (new Vector3(0, 0, debug) * update * percent);
+	//		cachedTransform.Rotate (new Vector3(0, 0, debug) * update * percent);
 			speed = speedVectorLeft;
 		} else {
-			cachedTransform.Rotate (new Vector3(0, 0, -debug) * update * percent);
+	//		cachedTransform.Rotate (new Vector3(0, 0, -debug) * update * percent);
 			speed = speedVectorRight;
 		}
 		speed *= percent * Time.deltaTime;

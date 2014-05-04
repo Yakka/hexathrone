@@ -49,8 +49,8 @@ public class PowerUp : MonoBehaviour {
 					//TEMP Code !!
 					if(Input.GetKeyDown(KeyCode.Space)) {
 						PlayRandomSound(rewardSounds);
-						transform.parent.parent.parent.parent.parent.parent.BroadcastMessage("AddScore", bonus); // Dirty code is dirty.
-						Track tr = transform.parent.GetComponent<Track>();
+						transform.parent.parent.parent.parent.parent.parent.parent.BroadcastMessage("AddScore", bonus); // Dirty code is dirty.
+						Track tr = transform.parent.parent.GetComponent<Track>();
 						tr.IncrementeTrackScore();
 						destroying = true;
 					GetComponent<ParticleSystem>().Play();
