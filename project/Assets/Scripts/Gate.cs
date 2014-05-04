@@ -27,6 +27,7 @@ public class Gate : MonoBehaviour
 			source = sourceGo.AddComponent<AudioSource>();
 
 			source.clip = Resources.Load<AudioClip>( "Sounds/gate" );
+			source.volume = 0.2f;
 		}
 	}
 	
@@ -58,8 +59,8 @@ public class Gate : MonoBehaviour
 				theBall.Transition( m_isLeftTrigger ? -1 : 1 );
 
 				//Play sound
-				if ( source != null )
-					source.Play();
+			//	if ( source != null )
+			//		source.Play();
 			}
 		}
 	}

@@ -10,6 +10,10 @@ public class AudioManager : MonoBehaviour {
 
 	private AudioSource[] AC;
 
+	public AudioSource[] GetAudioSources(){
+		return AC;
+	}
+
 	// Use this for initialization
 	void Start () {
 
