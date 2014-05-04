@@ -54,6 +54,9 @@ public class Ball : MonoBehaviour {
 	public GameObject note;
 	public GameObject container;
 
+	public bool ended = false;
+	public float endTimer = 2f;
+
 
 	// Use this for initialization
 	void Start () {
@@ -76,6 +79,12 @@ public class Ball : MonoBehaviour {
 
 	private bool triggerGate = false;
 	void Update () {
+		if(ended) {
+			endTimer -= Time.deltaTime;
+			if(endTimer <= 0f)
+				Application.LoadLevel(0);
+		}
+
 		int lastTrack = currentTrack;
 		UpdateCurrentTrack();
 		if(lastTrack != currentTrack) {
@@ -132,6 +141,9 @@ public class Ball : MonoBehaviour {
 				triggerGate = true;
 				reset = true;
 				crossedBars ++;
+			break;
+			case "End":
+				ended = true;
 			break;
 		}
 		if (reset) {

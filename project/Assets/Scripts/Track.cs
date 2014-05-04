@@ -18,9 +18,12 @@ public class Track : MonoBehaviour {
 	private bool full = false; // True when playing at 1
 	public float minimalVolume = 0.001f;
 
+	private float finalFade;
+
 	// Use this for initialization
 	void Start () {
 		audioTarget = gameObject.GetComponent<AudioManager>();
+		finalFade = target.endTimer;
 	}
 	
 	// Update is called once per frame
@@ -56,6 +59,10 @@ public class Track : MonoBehaviour {
 //
 
 		lastCrossedBar = target.crossedBars;
+
+		if(target.ended) {
+			audioTarget.SetVolumeAll(target.endTimer/finalFade);
+		}
 	}
 
 	public bool IsPlayingSomething() {
