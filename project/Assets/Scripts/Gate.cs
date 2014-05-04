@@ -46,6 +46,8 @@ public class Gate : MonoBehaviour
 
 				//launch particle
 				ParticleManager.instance.PlayParticle( "Gate", transform.position );
+
+				theBall.Transition( m_isLeftTrigger ? -1 : 1 );
 			}
 		}
 	}

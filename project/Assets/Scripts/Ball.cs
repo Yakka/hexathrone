@@ -8,6 +8,8 @@ public class Ball : MonoBehaviour {
 	public float baseAccel = 10f;
 	public float width = 21.65f;
 
+	public float transition;
+
 	private int score = 0;
 
 	private Vector3 speedVectorLeft;
@@ -135,5 +137,13 @@ public class Ball : MonoBehaviour {
 
 	public void AddScore(int bonus) {
 		score += bonus;
+	}
+
+	public void Transition( float sign )
+	{
+		Vector3 pos = cachedTransform.localPosition;
+		pos.x += sign * transition;
+
+		cachedTransform.localPosition = pos;
 	}
 }
