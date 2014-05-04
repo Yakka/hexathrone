@@ -9,7 +9,7 @@ public class DrumsManager : MonoBehaviour {
 
 	void Start () {
 		AM = gameObject.GetComponent<AudioManager>();
-		AM.UnmuteChannel(0);
+		AM.SetVolumeChannel(1f, 0);
 	}
 	
 	// Update is called once per frame
@@ -20,14 +20,16 @@ public class DrumsManager : MonoBehaviour {
 				nb++;
 		}
 
-		if(nb > 0)
-			AM.UnmuteChannel(1);
-		else
-			AM.MuteChannel(1);
-
-		if(nb > 3)
-			AM.UnmuteChannel(2);
-		else
-			AM.MuteChannel(2);
+		if(nb > 3) {
+			AM.SetVolumeAll(0f);
+			AM.SetVolumeChannel(1f, 2);
+		}
+		else if(nb > 1){
+			AM.SetVolumeAll(0f);
+			AM.SetVolumeChannel(1f, 1);
+		} else {
+			AM.SetVolumeAll(0f);
+			AM.SetVolumeChannel(1f, 0);
+		}
 	}
 }

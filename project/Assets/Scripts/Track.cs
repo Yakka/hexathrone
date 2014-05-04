@@ -6,12 +6,17 @@ public class Track : MonoBehaviour {
 	private int trackScore = 0;
 	public int scoreToPlay = 1;
 	public int scoreToStop = 1;
+	public int volumeVelocity = 3;
+	public float maximumVolume = 1f;
 
 	public int id;
 	public Ball target;
 	private int lastCrossedBar = 0;
 
 	private AudioManager audioTarget;
+
+	private bool full = false; // True when playing at 1
+	public float minimalVolume = 0.001f;
 
 	// Use this for initialization
 	void Start () {
@@ -24,13 +29,32 @@ public class Track : MonoBehaviour {
 		if(target.crossedBars != lastCrossedBar && target.GetCurrentTrack() != id && trackScore > 0) {
 			trackScore --;
 		}
-
+		
 		if(trackScore >= scoreToPlay) {
-			audioTarget.UnmuteAll();
+			full = true;
 		}
+
 		else if(trackScore < scoreToStop) {
-			audioTarget.MuteAll();
+			full = false;
 		} 
+
+
+		float minimum = 0f;
+		float div = 1f;
+		if(target.GetCurrentTrack() == id)
+			minimum = minimalVolume;
+		if(full)
+			div = scoreToStop;
+		else
+			div = scoreToPlay;
+
+
+		audioTarget.SetVolumeAll(Mathf.Clamp(((float) trackScore)/ div, minimum, maximumVolume));
+
+// MIXAGE TOOL
+	//	audioTarget.SetVolumeAll(maximumVolume);
+//
+
 		lastCrossedBar = target.crossedBars;
 	}
 
@@ -39,7 +63,7 @@ public class Track : MonoBehaviour {
 	}
 
 	public void IncrementeTrackScore() {
-		trackScore ++;
+		trackScore += volumeVelocity;
 		
 	}
 }
