@@ -63,7 +63,6 @@ public class InputManager : MonoBehaviour
 	{
 		float drag = delta.x;
 	
-		Debug.Log( delta.x );
 		if ( Mathf.Abs( drag ) > m_swipeThreshold )
 		{
 			if   ( drag > 0 ) m_isRight = true;
