@@ -44,6 +44,7 @@ public class PowerUp : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D other) {
     	if (other.gameObject.name == "Ball") {
+			GameObject ball = other.gameObject;
     		if(!destroying) {
 				#if UNITY_ANDROID
 					//TEMP Code !!

@@ -41,6 +41,10 @@ public class Ball : MonoBehaviour {
 
 	public float input = 0f;
 
+	public GameObject note;
+	public GameObject container;
+
+
 	// Use this for initialization
 	void Start () {
 		elapsedTime = Time.realtimeSinceStartup;
@@ -62,6 +66,11 @@ public class Ball : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.RightArrow)) {
 			if (triggerGate)
 				Debug.Log("Right >");
+		}
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			GameObject go = Instantiate(note) as GameObject;
+			go.transform.position = this.transform.position;
+			go.transform.parent = container.transform;
 		}
 	}
 	
