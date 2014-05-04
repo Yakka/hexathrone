@@ -23,6 +23,10 @@ public class PowerUp : MonoBehaviour {
 
 	public Track track;
 
+	public GameObject effect;
+
+	public UIPlayTween tween;
+
 	private bool isExit;
 
 	private float holdCounter;
@@ -49,10 +53,8 @@ public class PowerUp : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(destroying) {
-			if ( renderer != null )
-				renderer.enabled = false;
-			else
-				gameObject.SetActive( false );
+		//	if ( isHold )
+		//		gameObject.SetActive( false );
 		}
 
 		if ( isExit && InputManager.instance.m_isTapped )
@@ -70,7 +72,10 @@ public class PowerUp : MonoBehaviour {
 
 					//TEMP Code !!
 					if( InputManager.instance.m_isTapped ) 
+					{
 						CollectPowerup( other, transform.position );
+						ActivateEffect();
+					}
 			}
 		}
     }
@@ -119,6 +124,28 @@ public class PowerUp : MonoBehaviour {
 		
 		float gaussian = Mathf.Exp( -0.5f * Mathf.Pow( quota - hold, 2 ) );
 		if ( gaussian > holdQuota )
+		{
 			CollectPowerup( _ball, _ball.transform.position );
+			ActivateEffect();
+		}
+	}
+
+	void ActivateEffect()
+	{
+		if ( isHold )
+		{
+			tween.Play( true );
+		}
+		else
+		{
+			//disable renderer
+			renderer.enabled = false;
+			effect.SetActive( true );
+		}
+	}
+
+	public void DestroyPowerUp()
+	{
+		gameObject.SetActive( false );
 	}
 }
