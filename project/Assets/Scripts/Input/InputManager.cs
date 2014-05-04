@@ -14,6 +14,8 @@ public class InputManager : MonoBehaviour
 	public float m_swipeThreshold;
 	public float m_clickDelay;
 
+	public float m_holdCounter;
+
 	private float m_clickCounter;
 	void Awake()
 	{
@@ -29,12 +31,23 @@ public class InputManager : MonoBehaviour
 		m_isRight = Input.GetButtonUp( "Right" );
 
 #if UNITY_EDITOR || ( !UNITY_ANDROID && !UNITY_IPHONE )
+
 		m_isTapped = Input.GetButtonUp( "Tap" );
+
+		if ( Input.GetButtonDown( "Tap" ) )
+			m_holdCounter = Time.time;
 #else
 
 		if ( Time.time - m_clickCounter > m_clickDelay )
 			m_isTapped = false;
 #endif
+	}
+
+	void LateUpdate()
+	{
+		//reset hold
+		if ( !Input.GetButton( "Tap" ) )
+			m_holdCounter = Time.time;
 	}
 
 	void OnDrag( Vector2 delta )
@@ -54,4 +67,6 @@ public class InputManager : MonoBehaviour
 
 		m_clickCounter = Time.time;
 	}
+
+
 }
