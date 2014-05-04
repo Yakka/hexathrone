@@ -17,6 +17,7 @@ public class Gate : MonoBehaviour
 
 	private float m_triggerCounter;
 
+
 	// Use this for initialization
 	void Start () {
 	
@@ -63,7 +64,6 @@ public class Gate : MonoBehaviour
 		
 		foreach( Collider2D collider in colliders )
 			collider.enabled = true;
-
 		m_isTriggered = false;
 	}
 

@@ -22,6 +22,8 @@ public class Ball : MonoBehaviour {
 
 	public int crossedBars = 0;
 
+	private int currentTrack;
+
 	private bool isGoingToLeft = true;
 
 	public bool isLeft { get { return isGoingToLeft; } }
@@ -41,6 +43,10 @@ public class Ball : MonoBehaviour {
 		}
 	}
 
+	public int GetCurrentTrack() {
+		return currentTrack;
+	}
+
 	private Transform _cachedTransform;
 
 	public float input = 0f;
@@ -54,13 +60,27 @@ public class Ball : MonoBehaviour {
 		elapsedTime = Time.realtimeSinceStartup;
 		speedVectorLeft = new Vector3(-horizontalSpeed, -verticalSpeed, 0);
 		speedVectorRight = new Vector3(horizontalSpeed, -verticalSpeed, 0);
+	}
 
-		
+	public void UpdateCurrentTrack() {
+		float _x = transform.localPosition.x;
+		if(_x > -400 && _x < -200)
+			currentTrack = 0;
+		else if(_x > -200 && _x < 0)
+			currentTrack = 1;
+		else if(_x > 0 && _x < 200)
+			currentTrack = 2;
+		else if(_x > 200 && _x < 400)
+			currentTrack = 3;
 	}
 
 	private bool triggerGate = false;
 	void Update () {
-	
+		int lastTrack = currentTrack;
+		UpdateCurrentTrack();
+		if(lastTrack != currentTrack) {
+
+		}
 		// ---Manage Inputs---
 		//input = Input.GetAxis("Horizontal");
 		if (Input.GetKeyDown(KeyCode.LeftArrow)) {
@@ -116,8 +136,8 @@ public class Ball : MonoBehaviour {
 		}
 		if (reset) {
 			//this.renderer.material.color = color;
-			Debug.Log(origin);
-			Debug.Log(Time.realtimeSinceStartup - elapsedTime);
+			//Debug.Log(origin);
+			//Debug.Log(Time.realtimeSinceStartup - elapsedTime);
 			elapsedTime = Time.realtimeSinceStartup;
 			origin = 0f;
 		}
