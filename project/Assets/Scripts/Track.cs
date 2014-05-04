@@ -13,6 +13,9 @@ public class Track : MonoBehaviour {
 
 	private AudioManager audioTarget;
 
+	private bool full = false; // True when playing at 1
+	public float minimalVolume = 0.001f;
+
 	// Use this for initialization
 	void Start () {
 		audioTarget = gameObject.GetComponent<AudioManager>();
@@ -24,15 +27,30 @@ public class Track : MonoBehaviour {
 		if(target.crossedBars != lastCrossedBar && target.GetCurrentTrack() != id && trackScore > 0) {
 			trackScore --;
 		}
-		/*
+		
 		if(trackScore >= scoreToPlay) {
-			audioTarget.UnmuteAll();
+			full = true;
 		}
+
 		else if(trackScore < scoreToStop) {
-			audioTarget.MuteAll();
-		} */
+			full = false;
+		} 
+
+
+		float minimum = 0f;
+		float div = 1f;
+		if(target.GetCurrentTrack() == id)
+			minimum = minimalVolume;
+		if(full)
+			div = scoreToStop;
+		else
+			div = scoreToPlay;
+
+
+		audioTarget.SetVolumeAll(Mathf.Clamp(((float) trackScore)/ div, minimum, 1f));
+
+
 		lastCrossedBar = target.crossedBars;
-		audioTarget.SetVolumeAll(Mathf.Clamp(((float) trackScore)/ ((float) scoreToPlay), 0f, 1f));
 	}
 
 	public bool IsPlayingSomething() {
@@ -40,7 +58,7 @@ public class Track : MonoBehaviour {
 	}
 
 	public void IncrementeTrackScore() {
-		trackScore ++;
+		trackScore += 5;
 		
 	}
 }

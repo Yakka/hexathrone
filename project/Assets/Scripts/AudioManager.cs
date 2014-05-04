@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour {
 
 	public GameObject channelPrefab; // Prefab to instatiate
 
-	public AudioSource[] AC;
+	private AudioSource[] AC;
 
 	// Use this for initialization
 	void Start () {
