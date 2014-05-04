@@ -8,6 +8,8 @@ public class Ball : MonoBehaviour {
 	public float baseAccel = 10f;
 	public float width = 21.65f;
 
+	public float transition;
+
 	private int score = 0;
 
 	private Vector3 speedVectorLeft;
@@ -23,6 +25,8 @@ public class Ball : MonoBehaviour {
 	private int currentTrack;
 
 	private bool isGoingToLeft = true;
+
+	public bool isLeft { get { return isGoingToLeft; } }
 
 	public Transform cachedTransform
 	{
@@ -46,6 +50,10 @@ public class Ball : MonoBehaviour {
 	private Transform _cachedTransform;
 
 	public float input = 0f;
+
+	public GameObject note;
+	public GameObject container;
+
 
 	// Use this for initialization
 	void Start () {
@@ -83,6 +91,11 @@ public class Ball : MonoBehaviour {
 			if (triggerGate)
 				Debug.Log("Right >");
 		}
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			GameObject go = Instantiate(note) as GameObject;
+			go.transform.position = this.transform.position;
+			go.transform.parent = container.transform;
+		}
 	}
 	
 	void FixedUpdate () {
@@ -94,10 +107,10 @@ public class Ball : MonoBehaviour {
 		
 		Vector3 speed;
 		if (isGoingToLeft) {
-			cachedTransform.Rotate (new Vector3(0, 0, debug) * update * percent);
+	//		cachedTransform.Rotate (new Vector3(0, 0, debug) * update * percent);
 			speed = speedVectorLeft;
 		} else {
-			cachedTransform.Rotate (new Vector3(0, 0, -debug) * update * percent);
+	//		cachedTransform.Rotate (new Vector3(0, 0, -debug) * update * percent);
 			speed = speedVectorRight;
 		}
 		speed *= percent * Time.deltaTime;
@@ -144,5 +157,18 @@ public class Ball : MonoBehaviour {
 
 	public void AddScore(int bonus) {
 		score += bonus;
+	}
+
+	public void Transition( float sign )
+	{
+		Vector3 pos = cachedTransform.localPosition;
+		pos.x += sign * transition;
+
+		cachedTransform.localPosition = pos;
+
+		elapsedTime = Time.realtimeSinceStartup;
+		origin = -transition;
+
+//		Debug.Break();
 	}
 }
