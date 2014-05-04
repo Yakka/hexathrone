@@ -16,9 +16,18 @@ public class PowerUp : MonoBehaviour {
 
 	private bool destroying = false;
 
+	public bool isHold;
+	public float holdQuota;
+
 	public int bonus = 1;
 
 	public Track track;
+
+	private bool isExit;
+
+	private float holdCounter;
+
+	private Collider2D _ball;
 
 	// Use this for initialization
 	void Start () {
@@ -40,33 +49,76 @@ public class PowerUp : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(destroying) {
-			renderer.enabled = false;
+			if ( renderer != null )
+				renderer.enabled = false;
+			else
+				gameObject.SetActive( false );
+		}
+
+		if ( isExit && InputManager.instance.m_isTapped )
+		{
+			ComputeQuota();
+
+			isExit = false;
 		}
 	}
 
 	void OnTriggerStay2D(Collider2D other) {
-    	if (other.gameObject.name == "Ball") {
+    	if (other.gameObject.tag == "Ball") {
 		
     		if(!destroying) {
 
 					//TEMP Code !!
 					if( InputManager.instance.m_isTapped ) 
-					{
-						PlayRandomSound(rewardSounds);
-						//transform.parent.parent.parent.parent.parent.parent.parent.BroadcastMessage("AddScore", bonus); // Dirty code is dirty.
-						//we collide with the ball silly :P	
-						other.gameObject.SendMessage( "AddScore", bonus );
-						
-						track.IncrementeTrackScore();
-						destroying = true;
-			
-						ParticleManager.instance.PlayParticle( "Hit", transform.position );
-					}
+						CollectPowerup( other, transform.position );
 			}
 		}
     }
 
+	void OnTriggerEnter2D( Collider2D other )
+	{
+		//exit hold :D
+		if ( isHold )
+			Debug.Log( other.tag + " exited hold " );
+	}
+
     private void PlayRandomSound(AudioClip[] sounds) {
     	audioSource.PlayOneShot(sounds[Random.Range(0, sounds.Length)], 1f);
     }
+
+	void CollectPowerup( Collider2D ball, Vector3 position )
+	{
+		PlayRandomSound(rewardSounds);
+
+		//transform.parent.parent.parent.parent.parent.parent.parent.BroadcastMessage("AddScore", bonus); // Dirty code is dirty.
+		//we collide with the ball silly :P	
+		ball.gameObject.SendMessage( "AddScore", bonus );
+		
+		track.IncrementeTrackScore();
+		destroying = true;
+		
+		ParticleManager.instance.PlayParticle( "Hit", position );
+	}
+
+	void HoldEnter( Collider2D ball )
+	{
+		holdCounter = Time.time;
+	}
+
+	void HoldExit( Collider2D ball )
+	{
+		isExit = true;
+
+		_ball = ball;
+	}
+
+	void ComputeQuota()
+	{
+		float quota = InputManager.instance.m_isTapped ? Time.time - InputManager.instance.m_holdCounter : 0f; //don't consider use if not released before
+		float hold  = Time.time - holdCounter;
+		
+		float gaussian = Mathf.Exp( -0.5f * Mathf.Pow( quota - hold, 2 ) );
+		if ( gaussian > holdQuota )
+			CollectPowerup( _ball, _ball.transform.position );
+	}
 }
