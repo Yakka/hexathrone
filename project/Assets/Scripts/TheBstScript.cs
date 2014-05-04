@@ -4,30 +4,35 @@ using System.Collections;
 public class TheBstScript : MonoBehaviour {
 
     public float val; // sound level - dB
-    public float max = 11f;
-    public float min = -130f;
+    public float max = 11;
+    public float min = -130;
     public Color baseColor;
 
     private float[] samples; // audio samples
     private float fSample;
+    private AudioSource aud;
      
     public UISprite _sprite;
 	// Use this for initialization
 	void Start () {
-        _sprite = GetComponent<UISprite>();
+        AudioSource[] AC = transform.parent.GetComponent<AudioManager>().GetAudioSources();
+        _sprite = GetComponentsInChildren<UISprite>()[0];
         baseColor = _sprite.color;
         samples = new float[1];
-        fSample = AudioSettings.outputSampleRate;
-        audio.Play();
+        aud = AC[0];
+        aud.Play();
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        audio.GetOutputData(samples, 0); // fill array with samples
+        aud.GetOutputData(samples, 0); // fill array with samples
         val = 20f * Mathf.Log10( samples[0] / 0.1f ); // calculate dB
-        if (val < -160f)
+        val = Mathf.Clamp(val, -200f, 200f);
+        if (double.IsNaN(val) && val < -160f) {
             val = -160f; // clamp it to -160dB min
+            _sprite.color = Color.black;
+        }
         else {
             if (val > max) {
                 max = val;
@@ -36,8 +41,8 @@ public class TheBstScript : MonoBehaviour {
                 min = val;
             }
             val = (max + min) / (val + min);
-
-            _sprite.color = Color.Lerp(Color.black, baseColor, val);
+            _sprite.color = baseColor;
+            //_sprite.color = Color.Lerp(Color.black, baseColor, val);
         }
 	
 	}
