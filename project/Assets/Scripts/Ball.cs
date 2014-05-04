@@ -144,6 +144,8 @@ public class Ball : MonoBehaviour {
 			break;
 			case "End":
 				ended = true;
+				if(score > PlayerPrefs.GetInt("Highscore"))
+					PlayerPrefs.SetInt("Highscore", score);
 			break;
 		}
 		if (reset) {

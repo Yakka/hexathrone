@@ -11,7 +11,7 @@ public class Menu : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		PlayerPrefs.SetInt("Highscore", 235660);
+		//PlayerPrefs.SetInt("Highscore", 0);
 
 		highscoreScript = highscoreGO.GetComponent<UILabel>();
 
