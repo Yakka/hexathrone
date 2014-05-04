@@ -24,14 +24,15 @@ public class Track : MonoBehaviour {
 		if(target.crossedBars != lastCrossedBar && target.GetCurrentTrack() != id && trackScore > 0) {
 			trackScore --;
 		}
-
+		/*
 		if(trackScore >= scoreToPlay) {
 			audioTarget.UnmuteAll();
 		}
 		else if(trackScore < scoreToStop) {
 			audioTarget.MuteAll();
-		} 
+		} */
 		lastCrossedBar = target.crossedBars;
+		audioTarget.SetVolumeAll(Mathf.Clamp(((float) trackScore)/ ((float) scoreToPlay), 0f, 1f));
 	}
 
 	public bool IsPlayingSomething() {
