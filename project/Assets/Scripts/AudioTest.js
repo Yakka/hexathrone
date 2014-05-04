@@ -21,8 +21,10 @@ function Start()
     for (var i=0;i<band.length;i++)
     {
         band[i] = 0;
-        g[i] = new  GameObject.CreatePrimitive(PrimitiveType.Cube);
+        g[i] = new  GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         g[i].transform.position = Vector3(i,0,0);
+        g[i].transform.rotation.eulerAngles = Vector3(90,90,0);
+        g[i].transform.localScale.y = 0.5f;
     }
     InvokeRepeating("check", 0, 1.0/15.0); // update at 15 fps
 }
@@ -44,7 +46,8 @@ function check()
         {
             k++;
             crossover *= 2;   // frequency crossover point for each band.
-            g[k].transform.localScale.y = band[k]*32;
+            g[k].transform.localScale.x = 3 * band[k]*32;
+            g[k].transform.localScale.z = 3 * band[k]*32;
             g[k].renderer.material.color.b = band[k]*15;
             g[k].renderer.material.color.r = 0;
             g[k].renderer.material.color.g = 0;
