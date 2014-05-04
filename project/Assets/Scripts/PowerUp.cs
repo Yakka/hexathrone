@@ -18,6 +18,8 @@ public class PowerUp : MonoBehaviour {
 
 	public int bonus = 1;
 
+	public Track track; //just grab a reference to the track powerup
+
 	// Use this for initialization
 	void Start () {
 		SpriteRenderer sprite = GetComponent<SpriteRenderer>();
@@ -43,22 +45,26 @@ public class PowerUp : MonoBehaviour {
 	}
 
 	void OnTriggerStay2D(Collider2D other) {
-    	if (other.gameObject.name == "Ball") {
+    	if (other.gameObject.tag == "Ball") {
     		if(!destroying) {
-				#if UNITY_ANDROID
-					//TEMP Code !!
-					if(Input.GetKeyDown(KeyCode.Space)) {
+		//		#if UNITY_ANDROID
+					//TEMP <<Permanent :P>> Code !!
+					if( InputManager.instance.m_isTapped ) {
 						PlayRandomSound(rewardSounds);
-						transform.parent.parent.parent.parent.parent.parent.BroadcastMessage("AddScore", bonus); // Dirty code is dirty.
-						Track tr = transform.parent.GetComponent<Track>();
-						tr.IncrementeTrackScore();
+						//	transform.parent.parent.parent.parent.parent.parent.BroadcastMessage("AddScore", bonus); // Dirty code is dirty.
+						//it's easier if we just grab the ball and send a message to it :D (we know the ball is what we collided with no need to go up to the parent of parent of parent.... xD
+						other.gameObject.SendMessage( "AddScore", bonus );
+						
+						track.IncrementeTrackScore();
 						destroying = true;
-					GetComponent<ParticleSystem>().Play();
+
+						//play particles xD
+						ParticleManager.instance.PlayParticle( "Hit", transform.position );
 					}
 					// Swipe!
-				#else
+		//		#else
 					// COPY PASTE HERE FOR WINDOWS BUILD
-				#endif
+		//		#endif
 			}
 
 		}
