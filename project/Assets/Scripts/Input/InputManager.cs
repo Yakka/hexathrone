@@ -30,10 +30,11 @@ public class InputManager : MonoBehaviour
 
 #if UNITY_EDITOR || ( !UNITY_ANDROID && !UNITY_IPHONE )
 		m_isTapped = Input.GetButtonUp( "Tap" );
-#endif
+#else
 
 		if ( Time.time - m_clickCounter > m_clickDelay )
 			m_isTapped = false;
+#endif
 	}
 
 	void OnDrag( Vector2 delta )
